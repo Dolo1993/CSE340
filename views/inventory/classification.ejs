@@ -1,0 +1,12 @@
+<% 
+  // Check if 'title' exists; if true, display it in an <h1> tag,
+  // otherwise, redirect to the home page.
+  if (title) { %>
+    <h1><%= title %></h1>
+<% } else {
+    res.redirect('/');
+} %>
+
+<%# messages() %> 
+
+<%- grid %>
