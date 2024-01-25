@@ -40,29 +40,19 @@
 const { Pool } = require("pg");
 require("dotenv").config();
 
-let pool;
+// Database connection pool setup
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
-if (process.env.NODE_ENV === "development") {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  });
-} else {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  });
-}
-
-// Added for troubleshooting queries during development
+// Query execution function with logging (for development)
 async function query(text, params) {
   try {
     const res = await pool.query(text, params);
     console.log("executed query", { text, params });
     return res;
   } catch (error) {
-    console.error("error in query", { text, params });
+    console.error("error in query", { text, params, error });
     throw error;
   }
 }
