@@ -22,7 +22,8 @@ body {
   align-items: center;
 }
 
-#top-header .siteName a { 
+#top-header .siteName a {  
+  background-color: white;
   color: black;
   text-decoration: none;
   font-size: 1.5em;
@@ -154,15 +155,89 @@ nav li:hover {
   margin-top: -150px;
   max-width: 100%;
   border-radius: 10px;
+} 
+
+
+/* Navigation and Classification Grid */
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  background-color: white; 
+  padding: 10px;
 }
+
+nav li {
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-bottom: 5px;
+}
+
+nav li:hover {
+  color: #ff9900;
+}
+
+#inv-display { 
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+#inv-display li { 
+  /* background-color: white; */
+  width: 250px;
+  margin: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.namePrice { 
+  background-color: white;
+  margin-top: 10px;
+}
+
+hr { 
+  /* background-color: white; */
+  border: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+h2 { 
+  background-color: white;
+  font-size: 18px;
+  margin-bottom: 5px;
+} 
+h1 { 
+  background-color: white;
+  color: #333; 
+  margin-top: 30px;
+} 
+
+
+span { 
+  background-color: white;
+  font-size: 16px;
+  color: #007bff; 
+}
+
+.notice { 
+background-color: #0000ff;
+  color: #ff0000; 
+}
+
 
 /* Footer*/
 footer {
   text-align: left;
-  padding: 20px;
+  padding: 20px; 
+  margin-top: 150px;
   background-color: #333;
   color: #fff;
-}
+} 
+
 
 /* Larger car image */
 @media (max-width: 768px) {

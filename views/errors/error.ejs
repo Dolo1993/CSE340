@@ -1,0 +1,14 @@
+<% if (title) { %>
+  <h1 style="color: red;
+  background-color: white; 
+  margin-top: 50px; 
+  text-align: center; 
+  font-size: 30px;"><%= title %></h1>
+<% } else {
+  res.redirect('/');
+} %>
+
+<div style="color: red; 
+background-color: white; 
+margin-bottom: 360px;
+text-align: center;"><%- message %></div>
