@@ -1,0 +1,46 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title> 
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+</head>
+<body>
+    <div class="register-card">
+        <h1><%= title %></h1>  
+
+        <!-- server-side validation message -->
+          <% if (errors) { %>
+            <ul class="notice">
+           <% errors.array().forEach(error => { %>
+             <li><%= error.msg %></li>
+          <%  }) %>
+           </ul>
+          <% } %>
+        <p>All fields are required.</p>  
+        <form action="/account/register" method="post">
+            <fieldset>
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="account_firstname" required value="<%= locals.account_firstname %>">
+        
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="account_lastname" required value="<%= locals.account_lastname %>">
+        
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="account_email" required value="<%= locals.account_email %>">
+    
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="account_password"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{12,}"
+                       title="Password must be 12 characters or longer, contain at least 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character"
+                       required>
+                <button type="submit">Register</button>
+            </fieldset>
+        </form>
+
+        <script src="/js/script.js"></script>
+    </div>
+</body>
+</html>

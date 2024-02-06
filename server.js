@@ -1,14 +1,46 @@
 require('dotenv').config();
- 
-// Require Statements
+const flash = require('connect-flash');
+// Require Statements  
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const pool = require('./database/')
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const app = express();
 const staticRoutes = require("./routes/static"); 
 const baseController = require("./controllers/baseController"); 
 const inventoryRoute = require("./routes/inventoryRoute"); 
-const utilities = require("./utilities/index") 
+const utilities = require("./utilities/index"); 
 
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+})) 
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+
+
+// Express Messages Middleware 
+
+app.use(flash());
+app.use(function(req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+ 
+
+//VIEW ENGINE 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/layout");
@@ -16,7 +48,9 @@ app.set("layout", "./layouts/layout");
 app.use(staticRoutes); 
 // index routes 
 app.use("/inv", inventoryRoute);
-app.get("/", utilities.handleErrors(baseController.buildHome));  
+app.get("/", utilities.handleErrors(baseController.buildHome)); 
+app.use("/account", require("./routes/accountRoute")) 
+app.use("/inv", require("./routes/inventoryRoute"));
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
