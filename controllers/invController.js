@@ -1,15 +1,35 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
 
-const invCont = {} 
+const invCont = {}  
 
-//render management view
+
+// Function to render the "Add New Vehicle to Inventory" view
+invCont.buildAddInventoryView = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    const title = "Add New Vehicle to Inventory";
+    const messages = req.flash();
+    res.render("./inventory/add-inventory", {
+      title,
+      nav,
+      successMsg: messages.success,
+      errorMsgs: messages.error || [],
+      formData: req.session.formData || {}, 
+    });
+  } catch (error) {
+    console.error("Error in buildAddInventoryView:", error);
+    next(error);
+  }
+};
+
+//function to render management view
 invCont.buildManagementView = async function (req, res, next) {
   try {
     const nav = await utilities.getNav();
     const title = "Welcome to Inventory Management";
-    const messages = req.flash();
-    console.log("Debug: Rendering management view"); 
+    const messages = req.flash(); 
+    // const classificationSelect = await utilities.buildClassificationList()
     res.render("./inventory/management", {
       title,
       nav,
@@ -82,7 +102,6 @@ invCont.buildAddClassificationView = async function (req, res, next) {
     next(error);
   }
 };
- 
  
 
 module.exports = invCont

@@ -1,4 +1,6 @@
-require('dotenv').config();
+require('dotenv').config();  
+const jwt = require("jsonwebtoken")
+const cookieParser = require("cookie-parser")
 const flash = require('connect-flash');
 // Require Statements  
 const bodyParser = require("body-parser");
@@ -9,7 +11,7 @@ const expressLayouts = require("express-ejs-layouts");
 const app = express();
 const staticRoutes = require("./routes/static"); 
 const baseController = require("./controllers/baseController"); 
-const inventoryRoute = require("./routes/inventoryRoute"); 
+const inventoryRoute = require("./routes/inventoryRoute");  
 const utilities = require("./utilities/index"); 
 
 /* ***********************
@@ -25,10 +27,11 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 })) 
-
+// use statement
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
+app.use(bodyParser.urlencoded({ extended: true }))  
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 
 // Express Messages Middleware 
@@ -50,7 +53,7 @@ app.use(staticRoutes);
 app.use("/inv", inventoryRoute);
 app.get("/", utilities.handleErrors(baseController.buildHome)); 
 app.use("/account", require("./routes/accountRoute")) 
-app.use("/inv", require("./routes/inventoryRoute"));
+// app.use("/inv", require("./routes/inventoryRoute"));
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

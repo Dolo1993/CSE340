@@ -67,7 +67,12 @@ body {
   button:hover {
     background-color: #2980b9;
   }
-  
+  h1{
+    background-color: #ffffff; 
+    color: #008000; 
+    margin-top: 70px; 
+    margin-bottom: 350px;
+  }
   .error-msg {
     color: #e74c3c;
     font-size: 14px;
